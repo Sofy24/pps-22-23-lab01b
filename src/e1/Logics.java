@@ -24,4 +24,14 @@ public interface Logics{
      * @return whether position row,col has the pawn
      */
     boolean hasPawn(int row, int col);
+
+    /**
+     * @return the knight
+     */
+    AbstractPiece getKnight();
+
+    /**
+     * @return the pawn
+     */
+    AbstractPiece getPawn();
 }
