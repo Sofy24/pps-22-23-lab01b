@@ -40,9 +40,6 @@ public class PieceTest {
     }
 
 
-    /**
-     * @return
-     */
     private Pair<Integer,Integer> getNewPawnPosition(){
         int x = this.logics.getPawn().getPosition().getX();
         int y = this.logics.getPawn().getPosition().getY();
@@ -57,9 +54,7 @@ public class PieceTest {
         assertTrue(this.logics.getPawn().isPieceInThisPosition(correctPawnPosition));
     }
 
-    /**
-     * @return
-     */
+
     private Pair<Integer,Integer> getNewKnightPosition(){
         int x = this.logics.getKnight().getPosition().getX();
         int y = this.logics.getKnight().getPosition().getY();

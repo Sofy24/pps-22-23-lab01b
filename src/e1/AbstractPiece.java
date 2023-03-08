@@ -34,7 +34,11 @@ public abstract class AbstractPiece {
     abstract protected boolean checkMovement(Pair<Integer, Integer> newPosition);
 
     public Pair<Integer, Integer> getPosition() {
-        return piecePosition;
+        return this.piecePosition;
+    }
+
+    public void setPosition(Pair<Integer, Integer> newPosition){
+        this.piecePosition = newPosition;
     }
 
 }

@@ -36,7 +36,9 @@ public class LogicTest {
 
     @Test
     void WrongPositionTest() {
+        final int invalidPosition = -1;
         assertThrows(IndexOutOfBoundsException.class, () -> this.logic.hit(GUI_SIZE, GUI_SIZE));
+        assertThrows(IndexOutOfBoundsException.class, () -> this.logic.hit(invalidPosition, invalidPosition));
     }
 
     

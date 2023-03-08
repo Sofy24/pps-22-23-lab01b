@@ -16,6 +16,8 @@ public class LogicsImpl implements Logics {
     	this.size = size;
 		this.pawnImpl = new pawnImpl(size);
 		this.knightImpl = new knightImpl(size);
+		this.knightImpl.setPosition(knightPosition);
+		this.pawnImpl.setPosition(pawnPosition);
     }
     
 	@Override
