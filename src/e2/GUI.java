@@ -5,22 +5,22 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 
 import java.util.*;
-import java.util.Map.Entry;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
-public class GUIGame extends JFrame {
+public class GUI extends JFrame {
     //use template method
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
+    private List<Pair<Integer,Integer>> clickedCells = new ArrayList<>();
     
-    public GUIGame(int size, int numberOfMines) {
+    public GUI(int size, int numberOfMines) {
         this.logics = new LogicsImpl(size, numberOfMines);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*size, 100*size);
-        
         JPanel panel = new JPanel(new GridLayout(size,size));
         this.getContentPane().add(BorderLayout.CENTER,panel);
         
@@ -32,6 +32,11 @@ public class GUIGame extends JFrame {
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You lost!!");
             } else {
+                bt.setEnabled(false);
+                this.clickedCells.add(pos);
+                this.logics.setLocalNumberOfMines(pos);
+                this.clickedCells.addAll(this.logics.getAutoClickedPositions(pos));
+                System.out.println("autoclicked"+this.logics.getAutoClickedPositions(pos));
                 drawBoard();            	
             }
             boolean isThereVictory = this.logics.areYouAWinner(); // call the logic here to ask if there is victory
@@ -40,6 +45,7 @@ public class GUIGame extends JFrame {
                 JOptionPane.showMessageDialog(this, "You won!!");
                 System.exit(0);
             }
+
         };
 
         MouseInputListener onRightClick = new MouseInputAdapter() {
@@ -48,6 +54,7 @@ public class GUIGame extends JFrame {
                 final JButton bt = (JButton)e.getSource();
                 if (bt.isEnabled()){
                     final Pair<Integer,Integer> pos = buttons.get(bt);
+                    logics.changeFlagList(pos);
                     // call the logic here to put/remove a flag
                 }
                 drawBoard(); 
@@ -69,19 +76,20 @@ public class GUIGame extends JFrame {
     
     private void quitGame() {
         this.drawBoard();
-    	for (var entry: this.buttons.entrySet()) {
-            // call the logic here
-            // if this button is a mine, draw it "*"
-            // disable the button
-    	}
+        this.buttons.forEach((b,p) -> b.setText(this.logics.getMines().contains(p) ? "*" : ""));
+        // call the logic here
+        // if this button is a mine, draw it "*"
+        // disable the button
     }
 
     private void drawBoard() {
-        for (var entry: this.buttons.entrySet()) {
-            // call the logic here
-            // if this button is a cell with counter, put the number
-            // if this button has a flag, put the flag
-    	}
+        this.buttons.forEach((b,p) -> b.setText(this.clickedCells.contains(p) ? (this.logics.getLocalNumberOfMines().containsKey(p) ? String.valueOf(this.logics.getLocalNumberOfMines().get(p)) : "") : b.getText()));
+        this.buttons.forEach((b,p) -> b.setText(this.logics.getFlagList().contains(p) ? "F" : ""));
+        //this.buttons.forEach((b,p) -> b.setText(this.logics.getMines().contains(p) ? "*" : b.getText()));
+        // call the logic here
+        // if this button is a cell with counter, put the number
+        // if this button has a flag, put the flag
     }
+
     
 }
