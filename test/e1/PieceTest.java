@@ -49,7 +49,6 @@ public class PieceTest {
     @Test
     public void CorrectPawnPositionTest(){
         Pair<Integer, Integer> correctPawnPosition = getNewPawnPosition();
-        System.out.println("pawn"+correctPawnPosition);
         this.logics.getPawn().move(correctPawnPosition);
         assertTrue(this.logics.getPawn().isPieceInThisPosition(correctPawnPosition));
     }
