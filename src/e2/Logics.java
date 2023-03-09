@@ -19,7 +19,7 @@ public interface Logics {
     /**
      * @return whether you've won the game
      */
-    boolean areYouAWinner();
+    boolean areYouAWinner(Set<Pair<Integer, Integer>> clickedCells, Set<Pair<Integer, Integer>> allPositions);
 
     /**
      * @param position

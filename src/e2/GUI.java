@@ -5,17 +5,15 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 
 import java.util.*;
-import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame {
-    //use template method
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
-    private List<Pair<Integer,Integer>> clickedCells = new ArrayList<>();
+    private Set<Pair<Integer,Integer>> clickedCells = new HashSet<>();
     
     public GUI(int size, int numberOfMines) {
         this.logics = new LogicsImpl(size, numberOfMines);
@@ -31,6 +29,7 @@ public class GUI extends JFrame {
             if (aMineWasFound) {
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You lost!!");
+                System.exit(0);
             } else {
                 bt.setEnabled(false);
                 this.clickedCells.add(pos);
@@ -39,7 +38,9 @@ public class GUI extends JFrame {
                 System.out.println("autoclicked"+this.logics.getAutoClickedPositions(pos));
                 drawBoard();            	
             }
-            boolean isThereVictory = this.logics.areYouAWinner(); // call the logic here to ask if there is victory
+            Set<Pair<Integer, Integer>> allPositions = new HashSet<>();
+            this.buttons.forEach((b,p) -> allPositions.add(p));
+            boolean isThereVictory = this.logics.areYouAWinner(clickedCells, allPositions); // call the logic here to ask if there is victory
             if (isThereVictory){
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You won!!");
@@ -84,8 +85,8 @@ public class GUI extends JFrame {
 
     private void drawBoard() {
         this.buttons.forEach((b,p) -> b.setText(this.clickedCells.contains(p) ? (this.logics.getLocalNumberOfMines().containsKey(p) ? String.valueOf(this.logics.getLocalNumberOfMines().get(p)) : "") : b.getText()));
-        this.buttons.forEach((b,p) -> b.setText(this.logics.getFlagList().contains(p) ? "F" : ""));
-        //this.buttons.forEach((b,p) -> b.setText(this.logics.getMines().contains(p) ? "*" : b.getText()));
+        this.buttons.forEach((b,p) -> b.setText(this.logics.getFlagList().contains(p) ? "F" : b.getText().equals("F") ? "" : b.getText()));
+        this.buttons.forEach((b,p) -> b.setText(this.logics.getMines().contains(p) ? "*" : b.getText()));
         // call the logic here
         // if this button is a cell with counter, put the number
         // if this button has a flag, put the flag
