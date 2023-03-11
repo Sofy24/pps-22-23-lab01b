@@ -24,4 +24,10 @@ public interface Cell {
 
     void setRevealed(boolean b);
 
+    boolean isRevealed();
+
+    void setText(String string);
+
+    String getText();
+
 }

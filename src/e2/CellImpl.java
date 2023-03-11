@@ -7,6 +7,16 @@ public class CellImpl implements Cell {
     private final int x;
     private final int y;
     private boolean isRevealed = false;
+    private String text = "";
+    private GridSingleton grid;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public CellImpl(int x, int y) {
         this.x = x;
@@ -31,30 +41,33 @@ public class CellImpl implements Cell {
 
     @Override
     public Set<Cell> getAdjacentCells(Cell cell, int size) {
+        this.grid = GridSingleton.getInstance();
         Set<Cell> nearbyCells = Set.of(new CellImpl(1,1),
         new CellImpl(0,1), new CellImpl(-1,1), new CellImpl(1,0),
         new CellImpl(-1,-1), new CellImpl(-1,0), new CellImpl(1,-1),
         new CellImpl(0,-1));
         return nearbyCells.stream()
-        .map(newCell -> new CellImpl(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
         .filter(newCell -> newCell.getX() >= 0 && newCell.getY() >= 0)
         .filter(newCell -> newCell.getX() < size && newCell.getY() < size)
+        .map(newCell -> GridSingleton.getCell(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
         .collect(Collectors.toSet());
     }  
 
     @Override
     public Set<Cell> getNotRevealedAdjacentCells(Cell cell, int size) {
+        this.grid = GridSingleton.getInstance();
         Set<Cell> nearbyCells = Set.of(new CellImpl(1,1),
         new CellImpl(0,1), new CellImpl(-1,1), new CellImpl(1,0),
         new CellImpl(-1,-1), new CellImpl(-1,0), new CellImpl(1,-1),
         new CellImpl(0,-1));
         return nearbyCells.stream()
-        .map(newCell -> new CellImpl(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
-        .filter(newCell -> newCell.getX() >= 0 && newCell.getY() >= 0)
-        .filter(newCell -> newCell.getX() < size && newCell.getY() < size)
+        .filter(newCell -> newCell.getX() + cell.getX() >= 0 && newCell.getY() + cell.getY() >= 0)
+        .filter(newCell -> newCell.getX() + cell.getX() < size && newCell.getY() + cell.getY() < size)
+        .map(newCell -> GridSingleton.getCell(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
         .filter(newCell -> !newCell.isRevealed())
         .collect(Collectors.toSet());
     }  
+
 
     
 	@Override

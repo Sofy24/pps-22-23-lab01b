@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 public class GUI extends JFrame {
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Cell> buttons = new HashMap<>();
+    private final GridSingleton grid;
     private final Logics logics;
     private Set<Cell> clickedCells = new HashSet<>();
     
@@ -36,11 +37,11 @@ public class GUI extends JFrame {
                 this.logics.setLocalNumberOfMines(cell);
                 cell.setRevealed(true);
                 this.clickedCells.addAll(this.logics.getAutoClickedCells(cell));
+                System.out.println("gui"+this.clickedCells);
+                this.buttons.forEach((b,c) -> b.setEnabled(!this.clickedCells.contains(c)));
                 drawBoard();            	
             }
-            Set<Cell> allCells = new HashSet<>();
-            this.buttons.forEach((b,c) -> allCells.add(c));
-            boolean isThereVictory = this.logics.areYouAWinner(clickedCells, allCells); // call the logic here to ask if there is victory
+            boolean isThereVictory = this.logics.areYouAWinner(clickedCells, GridSingleton.getGrid()); // call the logic here to ask if there is victory
             if (isThereVictory){
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You won!!");
@@ -62,9 +63,10 @@ public class GUI extends JFrame {
             }
         };
                 
+        Set<Cell> allCells = new HashSet<>();
         for (int i=0; i<size; i++){
             for (int j=0; j<size; j++){
-                final JButton jb = new JButton(" ");
+                final JButton jb = new JButton("");
                 jb.addActionListener(onClick);
                 jb.addMouseListener(onRightClick);
                 Cell cell = new CellImpl(i,j);
@@ -72,6 +74,8 @@ public class GUI extends JFrame {
                 panel.add(jb);
             }
         }
+        this.buttons.forEach((b,c) -> allCells.add(c));
+        this.grid = GridSingleton.getInstance(allCells);
         this.drawBoard();
         this.setVisible(true);
     }
@@ -88,6 +92,7 @@ public class GUI extends JFrame {
         this.buttons.forEach((b,c) -> b.setText(this.clickedCells.contains(c) ? (this.logics.getLocalNumberOfMines().containsKey(c) ? String.valueOf(this.logics.getLocalNumberOfMines().get(c)) : "") : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getFlagList().contains(c) ? "F" : b.getText().equals("F") ? "" : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getMines().contains(c) ? "*" : b.getText()));
+        this.buttons.forEach((b,c) -> c.setText(b.getText()));
         // call the logic here
         // if this button is a cell with counter, put the number
         // if this button has a flag, put the flag
