@@ -9,7 +9,7 @@ public interface Logics {
     /**
      * @return the mines
      */
-    List<Pair<Integer, Integer>> getMines();
+    List<Cell> getMines();
 
     /**
      * @return whether you've lost the game
@@ -19,37 +19,37 @@ public interface Logics {
     /**
      * @return whether you've won the game
      */
-    boolean areYouAWinner(Set<Pair<Integer, Integer>> clickedCells, Set<Pair<Integer, Integer>> allPositions);
+    boolean areYouAWinner(Set<Cell> clickedCells, Set<Cell> allCells);
 
     /**
-     * @param position
-     * @return whether in the specific position there's a mine
+     * @param cell
+     * @return whether in the specific cell there's a mine
      */
-    boolean isThereMine(Pair<Integer, Integer> position);
+    boolean isThereMine(Cell cell);
 
     /**
-     * @param position
+     * @param cell
      */
-    void setLocalNumberOfMines(Pair<Integer, Integer> position);
+    void setLocalNumberOfMines(Cell cell);
 
     /**
      * @return nearby locations with number of mines
      */
-    Map<Pair<Integer, Integer>, Integer> getLocalNumberOfMines();
+    Map<Cell, Integer> getLocalNumberOfMines();
 
     /**
-     * @param position
-     * @return a set with the autoclicked positions
+     * @param cell
+     * @return a set with the autoclicked cells
      */
-    Set<Pair<Integer, Integer>> getAutoClickedPositions(Pair<Integer, Integer> position);
+    Set<Cell> getAutoClickedCells(Cell cell);
 
     /**
-     * @param position
+     * @param cell
      */
-    void changeFlagList(Pair<Integer, Integer> position);
+    void changeFlagList(Cell cell);
 
     /**
-     * @return a list with positions that have the flag
+     * @return a list with cells that have the flag
      */
-    Set<Pair<Integer, Integer>> getFlagList();
+    Set<Cell> getFlagList();
 }

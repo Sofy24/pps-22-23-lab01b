@@ -7,15 +7,15 @@ public class LogicsImpl implements Logics {
 	 
     public LogicsImpl(int size){
     	this.size = size;
-		this.pawnImpl = new pawnImpl(size);
-		this.knightImpl = new knightImpl(size);
+		this.pawnImpl = new PawnImpl(size);
+		this.knightImpl = new KnightImpl(size);
 
     }
 
 	public LogicsImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition){
     	this.size = size;
-		this.pawnImpl = new pawnImpl(size);
-		this.knightImpl = new knightImpl(size);
+		this.pawnImpl = new PawnImpl(size);
+		this.knightImpl = new KnightImpl(size);
 		this.knightImpl.setPosition(knightPosition);
 		this.pawnImpl.setPosition(pawnPosition);
     }

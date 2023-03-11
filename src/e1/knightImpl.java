@@ -1,12 +1,12 @@
 package e1;
 
 
-public class knightImpl extends AbstractPiece  {
+public class KnightImpl extends AbstractPiece  {
     private final int guiSize;
     /**
      * @param guiSize
      */
-    public knightImpl(int guiSize) {
+    public KnightImpl(int guiSize) {
         super(guiSize);
         this.guiSize = guiSize;
     }

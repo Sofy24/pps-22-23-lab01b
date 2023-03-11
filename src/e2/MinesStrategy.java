@@ -8,23 +8,23 @@ public interface MinesStrategy{
     /**
      * @return the mines
      */
-    List<Pair<Integer, Integer>> getMines();
+    List<Cell> getMines();
 
     /**
-     * @param position
-     * @return whether in the specific position there's a mine
+     * @param cell
+     * @return whether in the specific cell there's a mine
      */
-    boolean isThereMine(Pair<Integer, Integer> position);
+    boolean isThereMine(Cell cell);
 
     /**
-     * @param position
+     * @param cell
      */
-    void setLocalNumberOfMines(Pair<Integer, Integer> position);
+    void setLocalNumberOfMines(Cell cell);
 
     /**
      * @return nearby locations with number of mines
      */
-    Map<Pair<Integer, Integer>, Integer> getLocalNumberOfMines();
+    Map<Cell, Integer> getLocalNumberOfMines();
 
 
 }

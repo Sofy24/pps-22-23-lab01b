@@ -26,24 +26,24 @@ public class MineSweeperTest {
 
     @Test
     public void flagsTest(){
-        Pair<Integer, Integer> position = new Pair<>(new Random().nextInt(size), new Random().nextInt(size));
-        assertFalse(this.logics.getFlagList().contains(position));
-        this.logics.changeFlagList(position);
-        assertTrue(this.logics.getFlagList().contains(position));
-        this.logics.changeFlagList(position);
-        assertFalse(this.logics.getFlagList().contains(position));
+        Cell cell = new CellImpl(new Random().nextInt(size), new Random().nextInt(size));
+        assertFalse(this.logics.getFlagList().contains(cell));
+        this.logics.changeFlagList(cell);
+        assertTrue(this.logics.getFlagList().contains(cell));
+        this.logics.changeFlagList(cell);
+        assertFalse(this.logics.getFlagList().contains(cell));
     }
 
     @Test
     public void nearbyMinesTest(){
-        Pair<Integer, Integer> position = new Pair<>(new Random().nextInt(size), new Random().nextInt(size));
-        this.logics.setLocalNumberOfMines(position);
-        int numberOfMines = (int) this.logics.getMines().stream().filter(mine -> (mine.getX() == (position.getX() + 1) || mine.getX() == (position.getX() - 1)
-                                        || mine.getX() == position.getX()) && ( mine.getY() == position.getY()
-                                        || mine.getY() == (position.getY() - 1) || mine.getY() == (position.getY() + 1)))
+        Cell cell = new CellImpl(new Random().nextInt(size), new Random().nextInt(size));
+        this.logics.setLocalNumberOfMines(cell);
+        int numberOfMines = (int) this.logics.getMines().stream().filter(mine -> (mine.getX() == (cell.getX() + 1) || mine.getX() == (cell.getX() - 1)
+                                        || mine.getX() == cell.getX()) && ( mine.getY() == cell.getY()
+                                        || mine.getY() == (cell.getY() - 1) || mine.getY() == (cell.getY() + 1)))
                                        .count();
         System.out.println("mines:" + this.logics.getMines());
-        System.out.println("position" + position);
+        System.out.println("position" + cell);
         System.out.println(numberOfMines + "io vs f(x)" + this.logics.getLocalNumberOfMines());
         assertEquals(numberOfMines, this.logics.getLocalNumberOfMines().size());
     }

@@ -4,13 +4,13 @@ import java.util.Set;
 
 public interface FlagStrategy{
     /**
-     * @param position
+     * @param cell
      */
-    void changeFlagList(Pair<Integer, Integer> position);
+    void changeFlagList(Cell cell);
 
     /**
-     * @return a list with positions that have the flag
+     * @return a list with cells that have the flag
      */
-    Set<Pair<Integer, Integer>> getFlagList();
+    Set<Cell> getFlagList();
     
 }

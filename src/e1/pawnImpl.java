@@ -1,12 +1,12 @@
 package e1;
 
-public class pawnImpl extends AbstractPiece {
+public class PawnImpl extends AbstractPiece {
     private final int guiSize;
 
     /**
      * @param guiSize
      */
-    public pawnImpl(int guiSize) {
+    public PawnImpl(int guiSize) {
         super(guiSize);
         this.guiSize = guiSize;
     }

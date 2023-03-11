@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 public class MinesStrategyImpl implements MinesStrategy{
     private final int size;
     private final int numberOfMines;
-    private Map<Pair<Integer, Integer>, Integer> localNumberOfMines = new HashMap<>();
-    private List<Pair<Integer, Integer>> mines = new ArrayList<>();
+    private Map<Cell, Integer> localNumberOfMines = new HashMap<>();
+    private List<Cell> mines = new ArrayList<>();
 
     public MinesStrategyImpl(int size, int numberOfMines) {
         this.size = size;
@@ -23,47 +23,47 @@ public class MinesStrategyImpl implements MinesStrategy{
     private void createMines(){
         final Supplier<Integer> random = ()->new Random().nextInt(size);   
 		do {
-			mines.add(new Pair<>(random.get(), random.get()));
+			mines.add(new CellImpl(random.get(), random.get()));
 		} while (mines.stream().distinct().count() < this.numberOfMines);
     }
 
-    private List<Pair<Integer, Integer>> getNearbyPositions(Pair<Integer, Integer> position){
-        List<Pair<Integer, Integer>> nearbyPositions = List.of(new Pair<Integer,Integer>(1,1),
-        new Pair<Integer,Integer>(0,1), new Pair<Integer,Integer>(-1,1), new Pair<Integer,Integer>(1,0),
-        new Pair<Integer,Integer>(-1,-1), new Pair<Integer,Integer>(-1,0), new Pair<Integer,Integer>(1,-1),
-        new Pair<Integer,Integer>(0,-1));
-        return nearbyPositions.stream()
-        .map(newPosition -> new Pair<>(newPosition.getX() + position.getX(), newPosition.getY() + position.getY()))
-        .filter(newPosition -> newPosition.getX() >= 0 && newPosition.getY() >= 0)
-        .filter(newPosition -> newPosition.getX() < this.size && newPosition.getY() < this.size)
+    private List<Cell> getNearbyCells(Cell cell){
+        List<Cell> nearbyCells = List.of(new CellImpl(1,1),
+        new CellImpl(0,1), new CellImpl(-1,1), new CellImpl(1,0),
+        new CellImpl(-1,-1), new CellImpl(-1,0), new CellImpl(1,-1),
+        new CellImpl(0,-1));
+        return nearbyCells.stream()
+        .map(newCell -> new CellImpl(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
+        .filter(newCell -> newCell.getX() >= 0 && newCell.getY() >= 0)
+        .filter(newCell -> newCell.getX() < this.size && newCell.getY() < this.size)
         .collect(Collectors.toList());
         
     }
 
 
     @Override
-    public boolean isThereMine(Pair<Integer, Integer> position) {
-        return this.getMines().contains(position);
+    public boolean isThereMine(Cell cell) {
+        return this.getMines().contains(cell);
     }
 
     @Override
-    public void setLocalNumberOfMines(Pair<Integer, Integer> position) {
-        int localNumberOfMines = (int) getNearbyPositions(position).stream()
-        .filter(pos -> this.getMines().contains(pos)).count();
+    public void setLocalNumberOfMines(Cell cell) {
+        int localNumberOfMines = (int) getNearbyCells(cell).stream()
+        .filter(currentCell -> this.getMines().contains(currentCell)).count();
         if (localNumberOfMines > 0){
-            this.localNumberOfMines.put(position, localNumberOfMines);
+            this.localNumberOfMines.put(cell, localNumberOfMines);
         } 
         
     }
 
     @Override
-    public Map<Pair<Integer, Integer>, Integer> getLocalNumberOfMines() {
+    public Map<Cell, Integer> getLocalNumberOfMines() {
         return this.localNumberOfMines;
 
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getMines() {
+    public List<Cell> getMines() {
         return this.mines;
     }
     

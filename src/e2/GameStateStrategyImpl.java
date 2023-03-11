@@ -5,9 +5,9 @@ import java.util.Set;
 
 public class GameStateStrategyImpl implements GameStateStrategy {
     private boolean didYouLose;
-    private List<Pair<Integer, Integer>> mines;
+    private List<Cell> mines;
 
-    public GameStateStrategyImpl(List<Pair<Integer, Integer>> mines) {
+    public GameStateStrategyImpl(List<Cell> mines) {
         this.didYouLose = false;
         this.mines = mines;
     }
@@ -20,9 +20,9 @@ public class GameStateStrategyImpl implements GameStateStrategy {
     }
 
     @Override
-    public boolean areYouAWinner(Set<Pair<Integer, Integer>> clickedCells, Set<Pair<Integer, Integer>> allPositions) {
+    public boolean areYouAWinner(Set<Cell> clickedCells, Set<Cell> allCells) {
         clickedCells.addAll(this.mines);
-        return clickedCells.equals(allPositions);
+        return clickedCells.size() == allCells.size();
     }
     
 }

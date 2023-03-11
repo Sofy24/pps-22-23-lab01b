@@ -1,9 +1,5 @@
 package e2;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,12 +14,12 @@ public class LogicsImpl implements Logics {
         this.minesStrategy = new MinesStrategyImpl(size, numberOfMines);
         this.flagStrategy = new FlagStrategyImpl();
         this.gameStateStrategy = new GameStateStrategyImpl(this.minesStrategy.getMines());
-        this.autoclickStrategy = new AutoclickStrategyImpl(size, numberOfMines);
+        this.autoclickStrategy = new AutoclickStrategyImpl(size, numberOfMines, minesStrategy);
     }
 
 
     @Override
-    public List<Pair<Integer, Integer>> getMines() {
+    public List<Cell> getMines() {
         return this.minesStrategy.getMines();
     }
 
@@ -35,39 +31,39 @@ public class LogicsImpl implements Logics {
 
 
     @Override
-    public boolean isThereMine(Pair<Integer, Integer> position) {
-        return this.minesStrategy.isThereMine(position);
+    public boolean isThereMine(Cell cell) {
+        return this.minesStrategy.isThereMine(cell);
     }
 
 
     @Override
-    public boolean areYouAWinner(Set<Pair<Integer, Integer>> clickedCells, Set<Pair<Integer, Integer>> allPositions) {
-        return this.gameStateStrategy.areYouAWinner(clickedCells, allPositions);
+    public boolean areYouAWinner(Set<Cell> clickedCells, Set<Cell> allCells) {
+        return this.gameStateStrategy.areYouAWinner(clickedCells, allCells);
     }
 
     @Override
-    public void setLocalNumberOfMines(Pair<Integer, Integer> position) {
-        this.minesStrategy.setLocalNumberOfMines(position);        
+    public void setLocalNumberOfMines(Cell cell) {
+        this.minesStrategy.setLocalNumberOfMines(cell);        
     }
 
     @Override
-    public Map<Pair<Integer, Integer>, Integer> getLocalNumberOfMines() {
+    public Map<Cell, Integer> getLocalNumberOfMines() {
         return this.minesStrategy.getLocalNumberOfMines();
 
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getAutoClickedPositions(Pair<Integer, Integer> position) {
-        return this.autoclickStrategy.getAutoClickedPositions(position);
+    public Set<Cell> getAutoClickedCells(Cell cell) {
+        return this.autoclickStrategy.getAutoClickedCells(cell);
     }
 
     @Override
-    public void changeFlagList(Pair<Integer, Integer> position) {
-        this.flagStrategy.changeFlagList(position);
+    public void changeFlagList(Cell cell) {
+        this.flagStrategy.changeFlagList(cell);
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getFlagList() {
+    public Set<Cell> getFlagList() {
         return this.flagStrategy.getFlagList();
     }
 
