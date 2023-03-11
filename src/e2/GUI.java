@@ -85,7 +85,6 @@ public class GUI extends JFrame {
     }
 
     private void drawBoard() {
-        System.out.println("mines"+this.logics.getMines());
         this.buttons.forEach((b,c) -> b.setText(this.clickedCells.contains(c) ? (this.logics.getLocalNumberOfMines().containsKey(c) ? String.valueOf(this.logics.getLocalNumberOfMines().get(c)) : "") : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getFlagList().contains(c) ? "F" : b.getText().equals("F") ? "" : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getMines().contains(c) ? "*" : b.getText()));

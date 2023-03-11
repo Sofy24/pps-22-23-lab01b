@@ -65,10 +65,10 @@ public class CellImpl implements Cell {
 
 	@Override
 	public boolean equals(Object obj) {
-		/*if (this == obj)
+		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;*/
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Cell other = (Cell) obj;

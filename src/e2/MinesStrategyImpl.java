@@ -22,9 +22,12 @@ public class MinesStrategyImpl implements MinesStrategy{
 
     private void createMines(){
         final Supplier<Integer> random = ()->new Random().nextInt(size);   
-		do {
-			mines.add(new CellImpl(random.get(), random.get()));
-		} while (mines.stream().distinct().count() < this.numberOfMines);
+        while (mines.stream().distinct().count() < this.numberOfMines){
+            Cell cell = new CellImpl(random.get(), random.get());
+            if(!this.mines.contains(cell)){
+                mines.add(cell);
+            }
+        }
     }
 
     private List<Cell> getNearbyCells(Cell cell){
