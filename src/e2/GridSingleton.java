@@ -1,5 +1,6 @@
 package e2;
 
+import java.util.List;
 import java.util.Set;
 
 public final class GridSingleton {
@@ -37,11 +38,11 @@ public final class GridSingleton {
     }
 
     public static Cell getCell(int x, int y){
-        System.out.print(x+","+y);
-        System.out.print("grid singly"+grid);
-        return grid.stream().filter(cell -> cell.getX() == x)
+        System.out.print("cell="+x+","+y);
+        List<Cell> selected = grid.stream().filter(cell -> cell.getX() == x)
                     .filter(cell -> cell.getY() == y)
-                    .limit(1).toList().get(0);
+                    .limit(1).toList();
+        return selected.isEmpty() ? null : selected.get(0);
     }
 
 }

@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 public class GUI extends JFrame {
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Cell> buttons = new HashMap<>();
-    private final GridSingleton grid;
     private final Logics logics;
     private Set<Cell> clickedCells = new HashSet<>();
     
@@ -37,7 +36,7 @@ public class GUI extends JFrame {
                 this.logics.setLocalNumberOfMines(cell);
                 cell.setRevealed(true);
                 this.clickedCells.addAll(this.logics.getAutoClickedCells(cell));
-                System.out.println("gui"+this.clickedCells);
+                this.clickedCells.stream().forEach(c -> c.setText(c.getLocalNumberOfMines() > 0 ? String.valueOf(c.getLocalNumberOfMines()) : ""));
                 this.buttons.forEach((b,c) -> b.setEnabled(!this.clickedCells.contains(c)));
                 drawBoard();            	
             }
@@ -75,7 +74,8 @@ public class GUI extends JFrame {
             }
         }
         this.buttons.forEach((b,c) -> allCells.add(c));
-        this.grid = GridSingleton.getInstance(allCells);
+        GridSingleton.getInstance(allCells);
+        this.buttons.forEach((b,c) -> this.logics.setLocalNumberOfMines(c));
         this.drawBoard();
         this.setVisible(true);
     }
@@ -89,7 +89,7 @@ public class GUI extends JFrame {
     }
 
     private void drawBoard() {
-        this.buttons.forEach((b,c) -> b.setText(this.clickedCells.contains(c) ? (this.logics.getLocalNumberOfMines().containsKey(c) ? String.valueOf(this.logics.getLocalNumberOfMines().get(c)) : "") : b.getText()));
+        this.buttons.forEach((b,c) -> b.setText(this.clickedCells.contains(c) ? (c.getLocalNumberOfMines() > 0 ? String.valueOf(c.getLocalNumberOfMines()) : "") : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getFlagList().contains(c) ? "F" : b.getText().equals("F") ? "" : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getMines().contains(c) ? "*" : b.getText()));
         this.buttons.forEach((b,c) -> c.setText(b.getText()));

@@ -46,11 +46,6 @@ public class LogicsImpl implements Logics {
         this.minesStrategy.setLocalNumberOfMines(cell);        
     }
 
-    @Override
-    public Map<Cell, Integer> getLocalNumberOfMines() {
-        return this.minesStrategy.getLocalNumberOfMines();
-
-    }
 
     @Override
     public Set<Cell> getAutoClickedCells(Cell cell) {

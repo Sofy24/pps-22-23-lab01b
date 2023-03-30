@@ -44,8 +44,8 @@ public class MineSweeperTest {
                                        .count();
         System.out.println("mines:" + this.logics.getMines());
         System.out.println("position" + cell);
-        System.out.println(numberOfMines + "io vs f(x)" + this.logics.getLocalNumberOfMines());
-        assertEquals(numberOfMines, this.logics.getLocalNumberOfMines().size());
+        System.out.println(numberOfMines + "io vs f(x)" + cell.getLocalNumberOfMines());
+        assertEquals(numberOfMines, cell.getLocalNumberOfMines());
     }
 
 

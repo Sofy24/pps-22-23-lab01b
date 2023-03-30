@@ -26,6 +26,10 @@ public interface Cell {
 
     boolean isRevealed();
 
+    void setLocalNumberOfMines(int number);
+
+    int getLocalNumberOfMines();
+
     void setText(String string);
 
     String getText();

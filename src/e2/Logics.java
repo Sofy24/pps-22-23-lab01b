@@ -1,7 +1,6 @@
 package e2;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public interface Logics {
@@ -32,10 +31,6 @@ public interface Logics {
      */
     void setLocalNumberOfMines(Cell cell);
 
-    /**
-     * @return nearby locations with number of mines
-     */
-    Map<Cell, Integer> getLocalNumberOfMines();
 
     /**
      * @param cell

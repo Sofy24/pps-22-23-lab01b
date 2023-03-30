@@ -2,9 +2,11 @@ package e2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -53,21 +55,32 @@ public class MinesStrategyImpl implements MinesStrategy{
     public void setLocalNumberOfMines(Cell cell) {
         int localNumberOfMines = (int) getNearbyCells(cell).stream()
         .filter(currentCell -> this.getMines().contains(currentCell)).count();
-        if (localNumberOfMines > 0){
-            this.localNumberOfMines.put(cell, localNumberOfMines);
-        } 
-        
+        cell.setLocalNumberOfMines(localNumberOfMines);
     }
 
-    @Override
-    public Map<Cell, Integer> getLocalNumberOfMines() {
-        return this.localNumberOfMines;
+    // @Override
+    // public Map<Cell, Integer> getLocalNumberOfMines() {
+    //     GridSingleton.getGrid().stream().forEach(cell -> getNearbyCells(cell).stream().filter(currentCell -> this.getMines().contains(currentCell)));
+    //     Set<Cell> GridSingleton.getGrid().stream().forEach(cell -> getNearbyCells(cell));
+    //     getNearbyCells(cell).stream()
+    //     .filter(currentCell -> this.getMines().contains(currentCell)).count();
+    //     if (localNumberOfMines > 0){
+    //         this.localNumberOfMines.put(cell, localNumberOfMines);
+    //     } 
+    //     return this.localNumberOfMines;
 
-    }
+    // }
 
     @Override
     public List<Cell> getMines() {
         return this.mines;
+    }
+
+    @Override
+    public Set<Cell> getCellsNearMines() {
+        Set<Cell> cellsNearMines = new HashSet<>();
+        this.mines.stream().forEach(cell -> cellsNearMines.addAll(cell.getAdjacentCells(cell, size)));
+        return cellsNearMines;
     }
     
 }

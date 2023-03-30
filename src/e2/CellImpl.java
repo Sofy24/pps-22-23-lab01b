@@ -8,8 +8,13 @@ public class CellImpl implements Cell {
     private final int y;
     private boolean isRevealed = false;
     private String text = "";
-    private GridSingleton grid;
+    private int localNumberOfMines = 0;
 
+    public CellImpl(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    
     public String getText() {
         return text;
     }
@@ -18,9 +23,12 @@ public class CellImpl implements Cell {
         this.text = text;
     }
 
-    public CellImpl(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public int getLocalNumberOfMines() {
+        return this.localNumberOfMines;
+    }
+
+    public void setLocalNumberOfMines(int localNumberOfMines) {
+        this.localNumberOfMines = localNumberOfMines;
     }
 
     public int getX() {
@@ -41,7 +49,6 @@ public class CellImpl implements Cell {
 
     @Override
     public Set<Cell> getAdjacentCells(Cell cell, int size) {
-        this.grid = GridSingleton.getInstance();
         Set<Cell> nearbyCells = Set.of(new CellImpl(1,1),
         new CellImpl(0,1), new CellImpl(-1,1), new CellImpl(1,0),
         new CellImpl(-1,-1), new CellImpl(-1,0), new CellImpl(1,-1),
@@ -51,11 +58,10 @@ public class CellImpl implements Cell {
         .filter(newCell -> newCell.getX() < size && newCell.getY() < size)
         .map(newCell -> GridSingleton.getCell(newCell.getX() + cell.getX(), newCell.getY() + cell.getY()))
         .collect(Collectors.toSet());
-    }  
+    } 
 
     @Override
     public Set<Cell> getNotRevealedAdjacentCells(Cell cell, int size) {
-        this.grid = GridSingleton.getInstance();
         Set<Cell> nearbyCells = Set.of(new CellImpl(1,1),
         new CellImpl(0,1), new CellImpl(-1,1), new CellImpl(1,0),
         new CellImpl(-1,-1), new CellImpl(-1,0), new CellImpl(1,-1),
@@ -87,6 +93,5 @@ public class CellImpl implements Cell {
 		Cell other = (Cell) obj;
         return x == other.getX() && y == other.getY();
 	}
-
 
 }

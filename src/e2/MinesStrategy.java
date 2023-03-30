@@ -2,6 +2,7 @@ package e2;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface MinesStrategy{
     
@@ -22,9 +23,7 @@ public interface MinesStrategy{
     void setLocalNumberOfMines(Cell cell);
 
     /**
-     * @return nearby locations with number of mines
+     * @return a set of cells adjacent to at least one mine
      */
-    Map<Cell, Integer> getLocalNumberOfMines();
-
-
+    Set<Cell> getCellsNearMines();
 }
