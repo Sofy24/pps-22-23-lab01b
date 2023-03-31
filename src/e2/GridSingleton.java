@@ -38,7 +38,6 @@ public final class GridSingleton {
     }
 
     public static Cell getCell(int x, int y){
-        System.out.print("cell="+x+","+y);
         List<Cell> selected = grid.stream().filter(cell -> cell.getX() == x)
                     .filter(cell -> cell.getY() == y)
                     .limit(1).toList();

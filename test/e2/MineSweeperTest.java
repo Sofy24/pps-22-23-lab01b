@@ -42,9 +42,6 @@ public class MineSweeperTest {
                                         || mine.getX() == cell.getX()) && ( mine.getY() == cell.getY()
                                         || mine.getY() == (cell.getY() - 1) || mine.getY() == (cell.getY() + 1)))
                                        .count();
-        System.out.println("mines:" + this.logics.getMines());
-        System.out.println("position" + cell);
-        System.out.println(numberOfMines + "io vs f(x)" + cell.getLocalNumberOfMines());
         assertEquals(numberOfMines, cell.getLocalNumberOfMines());
     }
 

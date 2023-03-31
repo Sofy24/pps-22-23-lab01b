@@ -1,10 +1,8 @@
 package e2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -13,7 +11,6 @@ import java.util.stream.Collectors;
 public class MinesStrategyImpl implements MinesStrategy{
     private final int size;
     private final int numberOfMines;
-    private Map<Cell, Integer> localNumberOfMines = new HashMap<>();
     private List<Cell> mines = new ArrayList<>();
 
     public MinesStrategyImpl(int size, int numberOfMines) {
@@ -57,19 +54,6 @@ public class MinesStrategyImpl implements MinesStrategy{
         .filter(currentCell -> this.getMines().contains(currentCell)).count();
         cell.setLocalNumberOfMines(localNumberOfMines);
     }
-
-    // @Override
-    // public Map<Cell, Integer> getLocalNumberOfMines() {
-    //     GridSingleton.getGrid().stream().forEach(cell -> getNearbyCells(cell).stream().filter(currentCell -> this.getMines().contains(currentCell)));
-    //     Set<Cell> GridSingleton.getGrid().stream().forEach(cell -> getNearbyCells(cell));
-    //     getNearbyCells(cell).stream()
-    //     .filter(currentCell -> this.getMines().contains(currentCell)).count();
-    //     if (localNumberOfMines > 0){
-    //         this.localNumberOfMines.put(cell, localNumberOfMines);
-    //     } 
-    //     return this.localNumberOfMines;
-
-    // }
 
     @Override
     public List<Cell> getMines() {

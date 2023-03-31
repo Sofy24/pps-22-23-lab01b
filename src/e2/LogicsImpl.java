@@ -1,7 +1,6 @@
 package e2;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class LogicsImpl implements Logics {
@@ -14,7 +13,7 @@ public class LogicsImpl implements Logics {
         this.minesStrategy = new MinesStrategyImpl(size, numberOfMines);
         this.flagStrategy = new FlagStrategyImpl();
         this.gameStateStrategy = new GameStateStrategyImpl(this.minesStrategy.getMines());
-        this.autoclickStrategy = new AutoclickStrategyImpl(size, numberOfMines, minesStrategy);
+        this.autoclickStrategy = new AutoclickStrategyImpl(size, minesStrategy);
     }
 
 

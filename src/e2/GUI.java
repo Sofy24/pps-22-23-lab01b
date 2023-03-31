@@ -91,7 +91,6 @@ public class GUI extends JFrame {
     private void drawBoard() {
         this.buttons.forEach((b,c) -> b.setText(this.clickedCells.contains(c) ? (c.getLocalNumberOfMines() > 0 ? String.valueOf(c.getLocalNumberOfMines()) : "") : b.getText()));
         this.buttons.forEach((b,c) -> b.setText(this.logics.getFlagList().contains(c) ? "F" : b.getText().equals("F") ? "" : b.getText()));
-        this.buttons.forEach((b,c) -> b.setText(this.logics.getMines().contains(c) ? "*" : b.getText()));
         this.buttons.forEach((b,c) -> c.setText(b.getText()));
         // call the logic here
         // if this button is a cell with counter, put the number

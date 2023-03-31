@@ -9,7 +9,6 @@ public class LogicsImpl implements Logics {
     	this.size = size;
 		this.pawnImpl = new PawnImpl(size);
 		this.knightImpl = new KnightImpl(size);
-
     }
 
 	public LogicsImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition){
